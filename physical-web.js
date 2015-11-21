@@ -15,6 +15,7 @@
  **/
 "use strict";
 var eddystoneBeacon = require('eddystone-beacon');
+var EddystoneBeaconScanner = require('eddystone-beacon-scanner');
 
 module.exports = function(RED) {
 	function beacon(n){
@@ -25,7 +26,7 @@ module.exports = function(RED) {
 
 		this.options = {
 			txPowerLevel: this.power,
-			txPowerLevel: this.period
+			tlmPeriod: this.period
 		}
 
 		var node = this;
@@ -49,9 +50,8 @@ module.exports = function(RED) {
 
 		node.on('close', function(done){
 			try {
-				eddystoneBeacon.stop(function(){
-					done();
-				});
+				eddystoneBeacon.stop();
+				done();
 			} catch(e){
 				console.log('%j', e);
 			}
@@ -59,4 +59,27 @@ module.exports = function(RED) {
 
 	};
 	RED.nodes.registerType("PhysicalWeb out", beacon);
+
+	function scanner(n){
+		RED.nodes.createNode(this,n);
+		this.topic = n.topic;
+
+		var node = this;
+
+		function onFound(beacon) {
+			node.send({
+				topic: node.topic,
+				payload: beacon
+			});
+		}
+
+		EddystoneBeaconScanner.on('found', onFound);
+
+		this.on('close',function(done){
+			EddystoneBeaconScanner.removeListener('found', onFound);
+			done();
+		});
+	};
+	RED.nodes.registerType("PhysicalWeb in", scanner);
+
 };

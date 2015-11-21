@@ -8,4 +8,9 @@ Then on Linux follow these instrucations:
 
 https://github.com/sandeepmistry/bleno#running-on-linux
 
-The node will publish the content of msg.payload as a Eddystone URL
+
+### Config
+
+The config window lets you set the inital URL, anouncement power and period for the Eddystone.
+
+Any messages received will update the advertised URL from the msg.payload

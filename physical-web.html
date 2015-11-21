@@ -38,11 +38,12 @@
   <p><a href="https://google.github.io/physical-web/">Physical Web</a></p>
   <p><a href="https://github.com/sandeepmistry/bleno#running-on-linux">READ THIS ON LINUX</a>
   <p>This node takes the value of <i>msg.payload</i> and publishes it as a Eddystone URL announcement</p>
+  <p>The config window will allow you to set the powerlevel (-30 to 100 db) and the period (ms) between anouncements</p>
 </script>
 
 <script type="text/javascript">
     RED.nodes.registerType('PhysicalWeb out',{
-        category: 'input',      // the palette category
+        category: 'output',      // the palette category
         defaults: {             // defines the editable properties of the node
             name: {value:"Eddystone"},   //  along with default values.
             url: {value: ""},
@@ -52,6 +53,47 @@
         color: "#2F7ACD",
         inputs:1,               // set the number of inputs - only 0 or 1
         outputs:0,              // set the number of outputs - 0 to n
+        // set the icon (held in icons dir below where you save the node)
+        icon: "physical-web.png",     // saved in  icons/myicon.png
+        label: function() {     // sets the default label contents
+            return this.name||"PhysicalWeb";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="PhysicalWeb in">
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="eddysone">
+    </div>
+    <br/>
+    <!-- By convention, most nodes have a 'name' property. The following div -->
+    <!-- provides the necessary field. Should always be the last option      -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="PhysicalWeb in">
+  <p><a href="https://google.github.io/physical-web/">Physical Web</a></p>
+  <p><a href="https://github.com/sandeepmistry/bleno#running-on-linux">READ THIS ON LINUX</a>
+  <p>This node scans for Eddystones and publishes what it finds</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('PhysicalWeb in',{
+        category: 'input',      // the palette category
+        defaults: {             // defines the editable properties of the node
+            name: {value:"Eddystone"},   //  along with default values.
+            topic: {value: "eddystone"}
+        },
+        color: "#2F7ACD",
+        inputs:0,               // set the number of inputs - only 0 or 1
+        outputs:1,              // set the number of outputs - 0 to n
         // set the icon (held in icons dir below where you save the node)
         icon: "physical-web.png",     // saved in  icons/myicon.png
         label: function() {     // sets the default label contents

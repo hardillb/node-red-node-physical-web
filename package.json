@@ -18,11 +18,12 @@
   },
   "author": {
     "name": "Ben Hardill",
-    "email":"hardillb@gmail.com",
+    "email": "hardillb@gmail.com",
     "url": "http://www.hardill.me.uk/wordpress"
   },
   "license": "APACHE-2.0",
   "dependencies": {
-    "eddystone-beacon": "~1.0.4"
+    "eddystone-beacon": "~1.0.4",
+    "eddystone-beacon-scanner": "~3.0.0"
   }
 }
