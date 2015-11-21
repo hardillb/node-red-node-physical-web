@@ -23,12 +23,17 @@ module.exports = function(RED) {
 		this.period = n.period;
 		this.url = n.url;
 
+		this.options = {
+			txPowerLevel: this.power,
+			txPowerLevel: this.period
+		}
+
 		var node = this;
 
 		if (this.url) {
 			console.log(this.url);
 			try {
-				eddystoneBeacon.advertiseUrl(msg.payload);
+				eddystoneBeacon.advertiseUrl(msg.payload, node.options);
 			} catch(e){
 				console.log('%j', e);
 			}
@@ -36,7 +41,7 @@ module.exports = function(RED) {
 
 		node.on('input', function(msg){
 			try {
-				eddystoneBeacon.advertiseUrl(msg.payload);
+				eddystoneBeacon.advertiseUrl(msg.payload, node.options);
 			} catch(e){
 				console.log('error: %j', e);
 			}
